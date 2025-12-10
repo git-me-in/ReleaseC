@@ -1,12 +1,12 @@
 # My HW for C
 
-- [ ] pack 1
-- [ ] pack 2
-- [ ] pack 3
-- [ ] pack 4
-- [ ] pack 5
-- [ ] pack 6
-- [ ] pack 7
+- [x] pack 1
+- [x] pack 2
+- [x] pack 3
+- [x] pack 4
+- [x] pack 5
+- [x] pack 6
+- [x] pack 7
 - [ ] pack 8
 - [ ] pack 9
 - [ ] pack 10
