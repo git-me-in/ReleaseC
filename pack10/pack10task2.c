@@ -2,60 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #define LEN 8
+#define sp 1000001
 
-typedef struct Node
+typedef struct
 {
-    int num;
-    char *data;
-    struct Node *next;
-} Node;
-
-typedef struct List
-{
-    Node *current;
-    struct List *next;
-} List;
-
-Node *createNode(char *data, int num)
-{
-    Node *node = malloc(sizeof(Node));
-    node->data = malloc(LEN);
-    strcpy(node->data, data);
-    node->num = num;
-    node->next = NULL;
-    return node;
-}
-
-void pushNode(Node **head, char *data, int num)
-{
-    Node *node = createNode(data, num);
-
-    if (*head == NULL)
-    {
-        *head = node;
-        return;
-    }
-
-    Node *temp = *head;
-    while (temp->next != NULL)
-        temp = temp->next;
-
-    temp->next = node;
-}
-
-void printList(List *head)
-{
-    while (head != NULL)
-    {
-        Node *temp = head->current;
-        while (temp != NULL)
-        {
-            printf("%d %s\n", temp->num, temp->data);
-            temp = temp->next;
-        }
-        head = head->next;
-    }
-}
+    int len;
+    char (*data)[LEN];
+}Array;
 
 int main(void)
 {
@@ -65,26 +18,42 @@ int main(void)
     int N;
     scanf("%d", &N);
 
-    List *list = calloc(1000001, sizeof(List));
+    Array *list = malloc(sp * sizeof(Array));
 
     int ind;
-    char val[8];
+    char val[LEN];
+
     for(int i = 0; i < N; i++){
         scanf("%d %s", &ind, val);
-        pushNode(&list[ind].current, val, ind);
-    }
-
-    for(int i = 0; i < 1000001; i++){
-        if(list[i].current != NULL){
-            while (list[i].current != NULL)
-            {
-                printf("%d %s\n", list[i].current->num, list[i].current->data);
-                list[i].current = list[i].current->next;
-            }
+        if(list[ind].data == NULL){
+            list[ind].len = 1;
+            list[ind].data = malloc(sizeof(*list[ind].data));
+            strcpy(list[ind].data[0], val);
+        }
+        else{
+            char (*tmp)[LEN] = realloc(list[ind].data, (list[ind].len + 1) * sizeof(*list[ind].data));
+                if (!tmp) {
+                    free(list[ind].data);
+                    return 1;
+                }
+            list[ind].data = tmp;
+            strcpy(list[ind].data[list[ind].len], val);
+            list[ind].len++;
         }
     }
 
-    printList(list);
+    for(int i = 0; i < sp; i++){
+        if(list[i].data != NULL){
+            if(list[i].len > 1){
+                for(int k = 0; k < list[i].len; k++)
+                    printf("%d %s\n", i, list[i].data[k]);
+            }
+            else
+                printf("%d %s\n", i, list[i].data[0]);
+            free(list[i].data);
+        }
+    }
+    free(list);
 
     fclose(stdin);
     fclose(stdout);

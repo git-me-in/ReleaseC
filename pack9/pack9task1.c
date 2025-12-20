@@ -65,7 +65,7 @@ int main(void)
     int N;
     scanf("%d", &N);
 
-    List *list = calloc(1000001, sizeof(List));
+    List *list = calloc(N, sizeof(List));
 
     int ind;
     char val[8];
@@ -75,7 +75,7 @@ int main(void)
         pushNode(&list[ind].current, val, ind);
     }
 
-    for (int i = 0; i < 1000001; i++)
+    for (int i = 0; i < N; i++)
     {
         if (list[i].current != NULL)
         {
